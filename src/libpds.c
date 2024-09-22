@@ -1,4 +1,4 @@
-int main(int argc, char *argv[])
+int main()
 {
     printf("Hello World\n");
 
