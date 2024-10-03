@@ -16,7 +16,7 @@ typedef struct Stack
 typedef struct SingleLinkedNode
 {
     int id;
-    void *next;
+    struct SingleLinkedNode *next;
 } SingleLinkedNode;
 
 /* Single linked list - allows duplicates */
@@ -30,6 +30,18 @@ typedef struct DoubleLinkedList
 {
     /* data */
 } DoubleLinkedList;
+
+typedef struct BinaryTreeNode
+{
+    int data;
+    struct BinaryTreeNode *left;
+    struct BinaryTreeNode *right;
+} BinaryTreeNode;
+
+typedef struct BinaryTree
+{
+    struct BinaryTree *root;
+} BinaryTree;
 
 typedef struct HashMap
 {
@@ -53,6 +65,13 @@ void slist_remove_list(SingleLinkedList *list);
 void slist_get_id(SingleLinkedList *list, int id);
 void slist_get_index(SingleLinkedList *list, int index);
 void slist_print(SingleLinkedList *list);
+
+BinaryTree *btree_init();
+int tree_add(BinaryTree tree);
+int tree_remove(BinaryTree tree, int id);
+int tree_get(BinaryTree tree, int id);
+int tree_dfs_print(BinaryTree tree);
+int tree_bfs_print(BinaryTree tree);
 
 /* Create hash table */
 Person **hash_init();

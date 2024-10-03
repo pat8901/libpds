@@ -234,6 +234,33 @@ void slist_remove_list(SingleLinkedList *list)
 {
 }
 
+BinaryTree *btree_init()
+{
+    BinaryTree *ptr = malloc(sizeof(BinaryTree));
+    ptr->root = NULL;
+    return ptr;
+}
+
+int tree_add(BinaryTree tree)
+{
+}
+
+int tree_remove(BinaryTree tree, int id)
+{
+}
+
+int tree_get(BinaryTree tree, int id)
+{
+}
+
+int tree_dfs_print(BinaryTree tree)
+{
+}
+
+int tree_bfs_print(BinaryTree tree)
+{
+}
+
 Person **hash_init()
 {
     Person **arr = malloc(sizeof(Person) * 10);
