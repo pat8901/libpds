@@ -33,14 +33,14 @@ typedef struct DoubleLinkedList
 
 typedef struct BinaryTreeNode
 {
-    int data;
+    int id;
     struct BinaryTreeNode *left;
     struct BinaryTreeNode *right;
 } BinaryTreeNode;
 
 typedef struct BinaryTree
 {
-    struct BinaryTree *root;
+    struct BinaryTreeNode *root;
 } BinaryTree;
 
 typedef struct HashMap
@@ -66,12 +66,15 @@ void slist_get_id(SingleLinkedList *list, int id);
 void slist_get_index(SingleLinkedList *list, int index);
 void slist_print(SingleLinkedList *list);
 
-BinaryTree *btree_init();
-int tree_add(BinaryTree tree);
-int tree_remove(BinaryTree tree, int id);
-int tree_get(BinaryTree tree, int id);
-int tree_dfs_print(BinaryTree tree);
-int tree_bfs_print(BinaryTree tree);
+BinaryTreeNode *tree_init();
+BinaryTreeNode *tree_create_node(int value);
+BinaryTreeNode *tree_add(BinaryTreeNode **rootptr, int val);
+int tree_remove(BinaryTree *tree, int id);
+int tree_get(BinaryTree *tree, int id);
+void tree_dfs_preorder(BinaryTreeNode **rootptr);
+void tree_dfs_inorder(BinaryTreeNode *root);
+void tree_dfs_postorder(BinaryTreeNode **rootptr);
+int tree_bfs_print(BinaryTree *tree);
 
 /* Create hash table */
 Person **hash_init();

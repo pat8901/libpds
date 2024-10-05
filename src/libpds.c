@@ -7,7 +7,7 @@
 
 int main()
 {
-    // Single linked list test
+    /* Single linked list test
     SingleLinkedList *list = slist_create();
     slist_append(list, 1);
     slist_append(list, 2);
@@ -18,21 +18,18 @@ int main()
     slist_append(list, 64);
     slist_append(list, 128);
     slist_print(list);
-
     slist_remove_head(list);
     slist_remove_head(list);
     slist_print(list);
-
     slist_remove_tail(list);
     slist_remove_tail(list);
     slist_print(list);
-
     slist_get_id(list, 128);
     slist_get_index(list, 3);
-
     slist_prepend(list, 0);
     slist_prepend(list, -32);
     slist_print(list);
+    */
 
     /* hashtable test
     Person **ptr_array = hash_init();
@@ -45,6 +42,20 @@ int main()
     hash_get(ptr_array, 4);
     hash_get(ptr_array, 0);
     */
+
+    // Binary Tree
+    // BinaryTreeNode *root = tree_init();
+    BinaryTreeNode *root = NULL;
+
+    tree_add(&root, 8);
+    tree_add(&root, 8);
+    tree_add(&root, 5);
+    tree_add(&root, 10);
+    tree_add(&root, 2);
+
+    tree_dfs_inorder(root);
+    printf("=========\n");
+    tree_dfs_preorder(&root);
 
     return 0;
 }
@@ -234,30 +245,91 @@ void slist_remove_list(SingleLinkedList *list)
 {
 }
 
-BinaryTree *btree_init()
+BinaryTreeNode *tree_init()
 {
-    BinaryTree *ptr = malloc(sizeof(BinaryTree));
-    ptr->root = NULL;
-    return ptr;
+    BinaryTreeNode *root = malloc(sizeof(BinaryTreeNode));
+    // What does this do to the memory. It causes a segmentation fault. I set the pointer to mem to null?
+    // root = NULL;
+    return root;
 }
 
-int tree_add(BinaryTree tree)
+BinaryTreeNode *tree_create_node(int value)
+{
+    BinaryTreeNode *node = malloc(sizeof(BinaryTreeNode));
+    if (node != NULL)
+    {
+        node->id = value;
+        node->left = NULL;
+        node->right = NULL;
+    }
+    return node;
+}
+
+BinaryTreeNode *tree_add(BinaryTreeNode **rootptr, int val)
+{
+    BinaryTreeNode *root = *rootptr;
+
+    if (root == NULL)
+    {
+        printf("NULL found: adding '%d'\n", val);
+        (*rootptr) = tree_create_node(val);
+        return *rootptr;
+    }
+    if (root->id == val)
+    {
+        printf("Node '%d' already exist\n", val);
+        return;
+    }
+    if (val < root->id)
+    {
+        printf("traversing left\n");
+        tree_add(&root->left, val);
+    }
+    if (val > root->id)
+    {
+        printf("traversing right\n");
+        tree_add(&root->right, val);
+    }
+}
+
+int tree_remove(BinaryTree *tree, int id)
 {
 }
 
-int tree_remove(BinaryTree tree, int id)
+int tree_get(BinaryTree *tree, int id)
 {
 }
 
-int tree_get(BinaryTree tree, int id)
+void tree_dfs_inorder(BinaryTreeNode *root)
 {
+    if (root == NULL)
+    {
+        return;
+    }
+    tree_dfs_inorder(root->left);
+    printf("%d\n", root->id);
+    tree_dfs_inorder(root->right);
 }
 
-int tree_dfs_print(BinaryTree tree)
+void tree_dfs_preorder(BinaryTreeNode **root_ptr)
 {
+    BinaryTreeNode *root = *root_ptr;
+
+    if (root == NULL)
+    {
+        return;
+    }
+    printf("%d\n", root->id);
+    tree_dfs_preorder(&root->left);
+    tree_dfs_preorder(&root->right);
 }
 
-int tree_bfs_print(BinaryTree tree)
+void tree_dfs_postorder(BinaryTreeNode **rootptr)
+{
+    BinaryTreeNode *root = *rootptr;
+}
+
+int tree_bfs_print(BinaryTree *tree)
 {
 }
 
