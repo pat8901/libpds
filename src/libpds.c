@@ -56,6 +56,8 @@ int main()
     tree_dfs_inorder(root);
     printf("=========\n");
     tree_dfs_preorder(&root);
+    printf("=========\n");
+    tree_get(&root, 32);
 
     return 0;
 }
@@ -292,12 +294,35 @@ BinaryTreeNode *tree_add(BinaryTreeNode **rootptr, int val)
     }
 }
 
-int tree_remove(BinaryTree *tree, int id)
+int tree_remove(BinaryTreeNode **rootptr, int id)
 {
+    BinaryTreeNode *root = *rootptr;
+    if (root == NULL)
+    {
+    }
 }
 
-int tree_get(BinaryTree *tree, int id)
+int tree_get(BinaryTreeNode **rootptr, int id)
 {
+    BinaryTreeNode *root = *rootptr;
+    if (root == NULL)
+    {
+        printf("%d does not exist\n", id);
+        return 0;
+    }
+    if (root->id == id)
+    {
+        printf("Found %d\n", id);
+        return 0;
+    }
+    if (root->id < id)
+    {
+        tree_get(&root->right, id);
+    }
+    if (root->id > id)
+    {
+        tree_get(&root->left, id);
+    }
 }
 
 void tree_dfs_inorder(BinaryTreeNode *root)
