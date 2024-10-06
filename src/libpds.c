@@ -12,7 +12,7 @@ int main()
     slist_append(list, 1);
     slist_append(list, 2);
     slist_append(list, 4);
-    slist_append(list, 8);
+    slist_append(list, 8);s
     slist_append(list, 16);
     slist_append(list, 32);
     slist_append(list, 64);
@@ -299,6 +299,21 @@ int tree_remove(BinaryTreeNode **rootptr, int id)
     BinaryTreeNode *root = *rootptr;
     if (root == NULL)
     {
+        printf("%d not found\n", id);
+        return 0;
+    }
+    if (root->id == id)
+    {
+        printf("%d found\n", id);
+        // delete node
+    }
+    if (root->id < id)
+    {
+        tree_remove(&root->right, id);
+    }
+    if (root->id > id)
+    {
+        tree_remove(&root->left, id);
     }
 }
 

@@ -40,6 +40,7 @@ typedef struct BinaryTreeNode
 
 typedef struct BinaryTree
 {
+    uint8_t size;
     struct BinaryTreeNode *root;
 } BinaryTree;
 
