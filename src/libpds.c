@@ -48,16 +48,22 @@ int main()
     BinaryTreeNode *root = NULL;
 
     tree_add(&root, 8);
-    tree_add(&root, 8);
     tree_add(&root, 5);
+    tree_add(&root, 7);
     tree_add(&root, 10);
+    tree_add(&root, 9);
+    tree_add(&root, 13);
     tree_add(&root, 2);
 
     tree_dfs_inorder(root);
     printf("=========\n");
     tree_dfs_preorder(&root);
     printf("=========\n");
-    tree_get(&root, 32);
+
+    tree_remove(&root, 10);
+    printf("************\n");
+    tree_dfs_preorder(&root);
+    printf("************\n");
 
     return 0;
 }
@@ -294,27 +300,63 @@ BinaryTreeNode *tree_add(BinaryTreeNode **rootptr, int val)
     }
 }
 
-int tree_remove(BinaryTreeNode **rootptr, int id)
+void tree_remove(BinaryTreeNode **rootptr, int id)
 {
     BinaryTreeNode *root = *rootptr;
     if (root == NULL)
     {
         printf("%d not found\n", id);
-        return 0;
-    }
-    if (root->id == id)
-    {
-        printf("%d found\n", id);
-        // delete node
-    }
-    if (root->id < id)
-    {
-        tree_remove(&root->right, id);
+        return;
     }
     if (root->id > id)
     {
+        printf("traversing left\n");
         tree_remove(&root->left, id);
     }
+    else if (root->id < id)
+    {
+        printf("traversing right\n");
+        tree_remove(&root->right, id);
+    }
+    // Delete node
+    else
+    {
+        printf("%d found\n", id);
+        // No children
+        if (root->left == NULL)
+        {
+            printf("Setting right/null child\n");
+            BinaryTreeNode *temp = root->right;
+            free(root);
+            *rootptr = temp;
+        }
+        else if (root->right == NULL)
+        {
+            printf("Setting left child\n");
+            BinaryTreeNode *temp = root->left;
+            free(root);
+            *rootptr = temp;
+        }
+        // There is two children
+        else
+        {
+            printf("Node (%d) has two children\n", root->id);
+            BinaryTreeNode *minimum = tree_rsubtree_minimum(root->right);
+            printf("Right subtree min is Node (%d)\n", minimum->id);
+            root->id = minimum->id;
+            tree_remove(&root->right, minimum->id);
+        }
+    }
+    return;
+}
+
+BinaryTreeNode *tree_rsubtree_minimum(BinaryTreeNode *root)
+{
+    while (root->left != NULL)
+    {
+        root = root->left;
+    }
+    return root;
 }
 
 int tree_get(BinaryTreeNode **rootptr, int id)

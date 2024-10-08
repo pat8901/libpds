@@ -23,3 +23,8 @@ $(EXE): $(OBJS)
 
 clean:
 	rm -rf $(BUILD_DIR)/*
+
+# ------- Tests -------
+
+test:
+	$(CC) $(CFLAGS) tests/test.c src/libpds.c -o build/test
