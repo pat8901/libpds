@@ -45,27 +45,38 @@ int main()
 
     // Binary Tree
     // BinaryTreeNode *root = tree_init();
-    BinaryTreeNode *root = NULL;
+    // BinaryTreeNode *root = NULL;
 
-    tree_add(&root, 8);
-    tree_add(&root, 5);
-    tree_add(&root, 7);
-    tree_add(&root, 10);
-    tree_add(&root, 9);
-    tree_add(&root, 13);
-    tree_add(&root, 2);
+    // tree_add(&root, 8);
+    // tree_add(&root, 5);
+    // tree_add(&root, 7);
+    // tree_add(&root, 10);
+    // tree_add(&root, 9);
+    // tree_add(&root, 13);
+    // tree_add(&root, 2);
 
-    tree_dfs_inorder(root);
-    printf("=========\n");
-    tree_dfs_preorder(&root);
-    printf("=========\n");
+    // tree_dfs_inorder(root);
+    // printf("=========\n");
+    // tree_dfs_preorder(&root);
+    // printf("=========\n");
 
-    tree_remove(&root, 10);
-    printf("************\n");
-    tree_dfs_preorder(&root);
-    printf("************\n");
+    // tree_remove(&root, 10);
+    // printf("************\n");
+    // tree_dfs_preorder(&root);
+    // printf("************\n");
+
+    CircularQueue *queue = malloc(sizeof(CircularQueue));
+    printf("Queue: struct-address=%p ptr-address=%p size=%d\n", queue, &queue, queue->size);
+    queue_init(queue);
+    printf("Queue: struct-address=%p ptr-address=%p size=%d\n", queue, &queue, queue->size);
 
     return 0;
+}
+
+int queue_init(CircularQueue *queue_struct)
+{
+    printf("Queue: struct-address=%p ptr-address=%p size=%d\n", queue_struct, &queue_struct, queue_struct->size);
+    queue_struct->size = 10;
 }
 
 void slist_print(SingleLinkedList *list)
@@ -308,12 +319,12 @@ void tree_remove(BinaryTreeNode **rootptr, int id)
         printf("%d not found\n", id);
         return;
     }
-    if (root->id > id)
+    if (id < root->id)
     {
         printf("traversing left\n");
         tree_remove(&root->left, id);
     }
-    else if (root->id < id)
+    else if (id > root->id)
     {
         printf("traversing right\n");
         tree_remove(&root->right, id);

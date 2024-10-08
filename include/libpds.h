@@ -13,6 +13,15 @@ typedef struct Stack
     char *top;
 } Stack;
 
+typedef struct CircularQueue_
+{
+    uint8_t size;
+    uint8_t capacity;
+    uint8_t head;
+    uint8_t tail;
+    int *array;
+} CircularQueue;
+
 typedef struct SingleLinkedNode
 {
     int id;
@@ -55,6 +64,9 @@ typedef struct Person
     char name[MAX_NAME];
     int age;
 } Person;
+
+/* Create a circular queue */
+int queue_init(CircularQueue *queue_struct);
 
 /* Create single linked list */
 SingleLinkedList *slist_create();
