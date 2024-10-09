@@ -15,10 +15,10 @@ typedef struct Stack
 
 typedef struct CircularQueue_
 {
-    uint8_t size;
-    uint8_t capacity;
-    uint8_t head;
-    uint8_t tail;
+    uint32_t size;
+    uint32_t capacity;
+    uint32_t head;
+    uint32_t tail;
     int *array;
 } CircularQueue;
 
@@ -66,7 +66,9 @@ typedef struct Person
 } Person;
 
 /* Create a circular queue */
-int queue_init(CircularQueue *queue_struct);
+int queue_init(CircularQueue *queue, uint32_t size);
+int queue_enqueue(CircularQueue *queue, int value);
+int queue_dequeue(CircularQueue *queue);
 
 /* Create single linked list */
 SingleLinkedList *slist_create();

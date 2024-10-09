@@ -7,76 +7,110 @@
 
 int main()
 {
-    /* Single linked list test
-    SingleLinkedList *list = slist_create();
-    slist_append(list, 1);
-    slist_append(list, 2);
-    slist_append(list, 4);
-    slist_append(list, 8);s
-    slist_append(list, 16);
-    slist_append(list, 32);
-    slist_append(list, 64);
-    slist_append(list, 128);
-    slist_print(list);
-    slist_remove_head(list);
-    slist_remove_head(list);
-    slist_print(list);
-    slist_remove_tail(list);
-    slist_remove_tail(list);
-    slist_print(list);
-    slist_get_id(list, 128);
-    slist_get_index(list, 3);
-    slist_prepend(list, 0);
-    slist_prepend(list, -32);
-    slist_print(list);
-    */
-
-    /* hashtable test
-    Person **ptr_array = hash_init();
-    hash_insert(ptr_array, "Jeff", 120, 4);
-    hash_insert(ptr_array, "Rick", 54, 0);
-    hash_print_table(ptr_array, TABLE_SIZE);
-    hash_get(ptr_array, 0);
-    hash_delete(ptr_array, 0);
-    hash_print_table(ptr_array, TABLE_SIZE);
-    hash_get(ptr_array, 4);
-    hash_get(ptr_array, 0);
-    */
-
-    // Binary Tree
-    // BinaryTreeNode *root = tree_init();
-    // BinaryTreeNode *root = NULL;
-
-    // tree_add(&root, 8);
-    // tree_add(&root, 5);
-    // tree_add(&root, 7);
-    // tree_add(&root, 10);
-    // tree_add(&root, 9);
-    // tree_add(&root, 13);
-    // tree_add(&root, 2);
-
-    // tree_dfs_inorder(root);
-    // printf("=========\n");
-    // tree_dfs_preorder(&root);
-    // printf("=========\n");
-
-    // tree_remove(&root, 10);
-    // printf("************\n");
-    // tree_dfs_preorder(&root);
-    // printf("************\n");
-
     CircularQueue *queue = malloc(sizeof(CircularQueue));
-    printf("Queue: struct-address=%p ptr-address=%p size=%d\n", queue, &queue, queue->size);
-    queue_init(queue);
-    printf("Queue: struct-address=%p ptr-address=%p size=%d\n", queue, &queue, queue->size);
+    printf("Queue: array-address=%p \n", queue->array);
+    queue_init(queue, 10);
+    printf("Queue: array-address=%p \n", queue->array);
+
+    queue_enqueue(queue, 0);
+    queue_enqueue(queue, 1);
+    queue_enqueue(queue, 2);
+    queue_enqueue(queue, 4);
+    queue_enqueue(queue, 8);
+    queue_enqueue(queue, 16);
+    queue_enqueue(queue, 32);
+    queue_enqueue(queue, 64);
+    queue_enqueue(queue, 128);
+    queue_enqueue(queue, 256);
+
+    queue_dequeue(queue);
+    queue_enqueue(queue, 88);
+    queue_dequeue(queue);
+    queue_enqueue(queue, 100);
+    queue_dequeue(queue);
+    queue_dequeue(queue);
+    queue_dequeue(queue);
+
+    for (int i = 0; i < queue->size; i++)
+    {
+        if (queue->head == i && queue->tail == i)
+        {
+            printf("%d: value=%d (head)(tail)\n", i, queue->array[i]);
+        }
+        else if (queue->head == i)
+        {
+            printf("%d: value=%d (head)\n", i, queue->array[i]);
+        }
+        else if (queue->tail == i)
+        {
+            printf("%d: value=%d (tail)\n", i, queue->array[i]);
+        }
+        else
+        {
+            printf("%d: value=%d\n", i, queue->array[i]);
+        }
+    }
 
     return 0;
 }
 
-int queue_init(CircularQueue *queue_struct)
+int queue_init(CircularQueue *queue, uint32_t size)
 {
-    printf("Queue: struct-address=%p ptr-address=%p size=%d\n", queue_struct, &queue_struct, queue_struct->size);
-    queue_struct->size = 10;
+    queue->size = size;
+    printf("size: %d\n", size);
+    queue->capacity = 0;
+    queue->array = malloc(sizeof(uint32_t) * size);
+    return 0;
+}
+
+int queue_enqueue(CircularQueue *queue, int value)
+{
+    if (queue->capacity == queue->size)
+    {
+        printf("Queue is full\n");
+        return -1;
+    }
+    // queue is empty
+    if (queue->capacity == 0)
+    {
+        printf("Queue is empty: adding (%d)\n", value);
+        queue->head = 0;
+        queue->tail = 0;
+        queue->array[queue->tail] = value;
+        queue->capacity++;
+    }
+    else
+    {
+        printf("Queue not empty: adding (%d)\n", value);
+        queue->tail = (queue->tail += 1) % queue->size;
+        queue->array[queue->tail] = value;
+        queue->capacity++;
+        printf("New Capacity: %d\n", queue->capacity);
+    }
+    return 0;
+}
+
+int queue_dequeue(CircularQueue *queue)
+{
+    if (queue->capacity == 0)
+    {
+        printf("Queue is empty! Cannot dequeue\n");
+        return 0;
+    }
+    if (queue->head == queue->tail)
+    {
+        printf("One item found: (%d)\n", queue->array[queue->head]);
+        int return_value = queue->array[queue->head];
+        queue->head = 0;
+        queue->tail = 0;
+        queue->capacity = 0;
+        return return_value;
+    }
+    int return_value = queue->array[queue->head];
+    queue->head = (queue->head + 1) % queue->size;
+    queue->capacity--;
+    printf("Dequeued (%d)\n", return_value);
+    return return_value;
 }
 
 void slist_print(SingleLinkedList *list)
