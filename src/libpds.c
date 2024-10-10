@@ -2,54 +2,12 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 #define TABLE_SIZE 10
 
 int main()
 {
-    CircularQueue *queue = malloc(sizeof(CircularQueue));
-    printf("Queue: array-address=%p \n", queue->array);
-    queue_init(queue, 10);
-    printf("Queue: array-address=%p \n", queue->array);
-
-    queue_enqueue(queue, 0);
-    queue_enqueue(queue, 1);
-    queue_enqueue(queue, 2);
-    queue_enqueue(queue, 4);
-    queue_enqueue(queue, 8);
-    queue_enqueue(queue, 16);
-    queue_enqueue(queue, 32);
-    queue_enqueue(queue, 64);
-    queue_enqueue(queue, 128);
-    queue_enqueue(queue, 256);
-
-    queue_dequeue(queue);
-    queue_enqueue(queue, 88);
-    queue_dequeue(queue);
-    queue_enqueue(queue, 100);
-    queue_dequeue(queue);
-    queue_dequeue(queue);
-    queue_dequeue(queue);
-
-    for (int i = 0; i < queue->size; i++)
-    {
-        if (queue->head == i && queue->tail == i)
-        {
-            printf("%d: value=%d (head)(tail)\n", i, queue->array[i]);
-        }
-        else if (queue->head == i)
-        {
-            printf("%d: value=%d (head)\n", i, queue->array[i]);
-        }
-        else if (queue->tail == i)
-        {
-            printf("%d: value=%d (tail)\n", i, queue->array[i]);
-        }
-        else
-        {
-            printf("%d: value=%d\n", i, queue->array[i]);
-        }
-    }
 
     return 0;
 }
@@ -111,6 +69,65 @@ int queue_dequeue(CircularQueue *queue)
     queue->capacity--;
     printf("Dequeued (%d)\n", return_value);
     return return_value;
+}
+
+int queue_clear(CircularQueue *queue)
+{
+    if (queue_is_empty(queue))
+    {
+        printf("Can not clear, queue is already empty\n");
+        return 1;
+    }
+
+    queue->capacity = 0;
+    queue->head = 0;
+    queue->tail = 0;
+
+    return 0;
+}
+
+void queue_print(CircularQueue *queue)
+{
+    for (int i = 0; i < queue->size; i++)
+    {
+        if (queue->head == i && queue->tail == i)
+        {
+            printf("%d: value=%d (head)(tail)\n", i, queue->array[i]);
+        }
+        else if (queue->head == i)
+        {
+            printf("%d: value=%d (head)\n", i, queue->array[i]);
+        }
+        else if (queue->tail == i)
+        {
+            printf("%d: value=%d (tail)\n", i, queue->array[i]);
+        }
+        else
+        {
+            printf("%d: value=%d\n", i, queue->array[i]);
+        }
+    }
+}
+
+int queue_peek(CircularQueue *queue)
+{
+    if (queue->capacity == 0)
+    {
+        printf("Peek: queue is empty!\n");
+        return 1;
+    }
+    int value = queue->array[queue->head];
+    printf("Peek: %d\n", value);
+    return value;
+}
+
+int queue_is_empty(CircularQueue *queue)
+{
+    if (queue->capacity == 0)
+    {
+        return 1;
+    }
+    return 0;
 }
 
 void slist_print(SingleLinkedList *list)

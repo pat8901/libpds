@@ -69,6 +69,10 @@ typedef struct Person
 int queue_init(CircularQueue *queue, uint32_t size);
 int queue_enqueue(CircularQueue *queue, int value);
 int queue_dequeue(CircularQueue *queue);
+void queue_print(CircularQueue *queue);
+int queue_peek(CircularQueue *queue);
+int queue_is_empty(CircularQueue *queue);
+int queue_clear(CircularQueue *queue);
 
 /* Create single linked list */
 SingleLinkedList *slist_create();
