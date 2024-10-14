@@ -85,6 +85,7 @@ void slist_get_id(SingleLinkedList *list, int id);
 void slist_get_index(SingleLinkedList *list, int index);
 void slist_print(SingleLinkedList *list);
 
+/* Binary Tree */
 BinaryTreeNode *tree_init();
 BinaryTreeNode *tree_create_node(int value);
 BinaryTreeNode *tree_add(BinaryTreeNode **rootptr, int val);
@@ -94,7 +95,7 @@ int tree_get(BinaryTreeNode **rootptr, int id);
 void tree_dfs_preorder(BinaryTreeNode **rootptr);
 void tree_dfs_inorder(BinaryTreeNode *root);
 void tree_dfs_postorder(BinaryTreeNode **rootptr);
-int tree_bfs_print(BinaryTree *tree);
+void tree_bfs_print(BinaryTreeNode *root);
 
 /* Create hash table */
 Person **hash_init();

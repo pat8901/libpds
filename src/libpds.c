@@ -473,8 +473,33 @@ void tree_dfs_postorder(BinaryTreeNode **rootptr)
     BinaryTreeNode *root = *rootptr;
 }
 
-int tree_bfs_print(BinaryTree *tree)
+// TODO: change binary tree so dequeue will return tree nodes
+// TODO: Make a queue that can hold tree nodes
+void tree_bfs_print(BinaryTreeNode *root)
 {
+    CircularQueue *queue = malloc(sizeof(CircularQueue));
+    queue_init(queue, 32);
+
+    if (root == NULL)
+    {
+        printf("Tree is empty!\n");
+        return;
+    }
+    queue_enqueue(queue, root->id);
+
+    while (!queue_is_empty(queue))
+    {
+        int node = queue_dequeue(queue);
+        printf("Node value\n");
+        if (1)
+        {
+            // enqueue left child if it exist
+        }
+        if (1)
+        {
+            // enqueue right child if it exist
+        }
+    }
 }
 
 Person **hash_init()
