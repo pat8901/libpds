@@ -3,13 +3,136 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <stddef.h>
 
 #define TABLE_SIZE 10
 
 int main()
 {
+    queue_t *queue = qinit(16, sizeof(int));
+    queue_t *tree_queue = qinit(16, sizeof(BinaryTreeNode));
+
+    BinaryTreeNode *node1 = malloc(sizeof(BinaryTreeNode));
+    node1->id = 128;
+
+    BinaryTreeNode *node2 = malloc(sizeof(BinaryTreeNode));
+    node2->id = 256;
+    qadd(tree_queue, node1);
+    qadd(tree_queue, node2);
+
+    BinaryTreeNode *result1 = (BinaryTreeNode *)qremove(tree_queue);
+    if (result1 != NULL)
+    {
+        printf("Node1 id: %d\n", result1->id);
+    }
+    BinaryTreeNode *result2 = (BinaryTreeNode *)qremove(tree_queue);
+    if (result2 != NULL)
+    {
+        printf("Node2 value: %d\n", result2->id);
+    }
+    BinaryTreeNode *result3 = (BinaryTreeNode *)qremove(tree_queue);
+    if (result3 != NULL)
+    {
+        printf("Node3 value: %d\n", result3->id);
+    }
+
+    // int a = 101;
+    // int b = 32;
+
+    // int *ptr = &a;
+    // int *bptr = &b;
+
+    // qadd(queue, bptr);
+    // qadd(queue, ptr);
+
+    // int *value1 = ((char *)qremove(queue));
+    // printf("value: %d\n", *value1);
+
+    // int *value2 = ((char *)qremove(queue));
+    // printf("value: %d\n", *value2);
+
+    // int value3 = ((char *)qremove(queue));
+    // if (value3 != NULL)
+    // {
+    //     printf("value: %d\n", value3);
+    // }
 
     return 0;
+}
+
+queue_t *qinit(int max_size, size_t item_size)
+{
+    queue_t *queue = (queue_t *)malloc(sizeof(queue_t));
+    queue->data = malloc(item_size * max_size);
+    queue->max_size = max_size;
+    queue->current_size = 0;
+    queue->item_size = item_size;
+    queue->front = 0;
+    queue->rear = 0;
+    return queue;
+}
+
+void qprint(queue_t *queue)
+{
+    if (queue == NULL || queue->current_size == 0)
+    {
+        printf("Queue is empty\n");
+    }
+    else
+    {
+        for (int i = 0; i < queue->max_size; i++)
+        {
+            int value = queue->data;
+        }
+    }
+}
+
+int qadd(queue_t *queue, void *item)
+{
+    if (queue->current_size == queue->max_size)
+    {
+        printf("Queue is full\n");
+        return -1;
+    }
+    else if (queue->current_size == 0)
+    {
+        void *target = (char *)queue->data + (queue->rear * queue->item_size);
+        printf("Queue is empty\n");
+        memcpy(target, item, queue->item_size);
+        queue->current_size += 1;
+    }
+    else
+    {
+        printf("Queue is not empty\n");
+        queue->rear = (queue->rear += 1) % queue->max_size;
+        void *target = (char *)queue->data + (queue->rear * queue->item_size);
+        memcpy(target, item, queue->item_size);
+        queue->current_size += 1;
+    }
+    return 0;
+}
+
+void *qremove(queue_t *queue)
+{
+    if (queue->current_size == 0)
+    {
+        printf("Queue is empty\n");
+        return NULL;
+    }
+
+    void *target = (char *)queue->data + (queue->front * queue->item_size);
+    if (queue->current_size == 1)
+    {
+        printf("Queue has only 1 item\n");
+        queue->current_size--;
+        queue->front = 0;
+        queue->rear = 0;
+        return target;
+    }
+    printf("Queue has more than 1 item\n");
+    queue->current_size--;
+    queue->front = (queue->front += 1) % queue->max_size;
+    return target;
 }
 
 int queue_init(CircularQueue *queue, uint32_t size)

@@ -2,6 +2,7 @@
 #define LIBPDS_H
 
 #include <stdint.h>
+#include <stddef.h>
 
 #define MAX_NAME 256
 
@@ -21,6 +22,16 @@ typedef struct CircularQueue_
     uint32_t tail;
     int *array;
 } CircularQueue;
+
+typedef struct __queue_t
+{
+    void *data;
+    size_t item_size;
+    int current_size;
+    int max_size;
+    int front;
+    int rear;
+} queue_t;
 
 typedef struct SingleLinkedNode
 {
@@ -73,6 +84,12 @@ void queue_print(CircularQueue *queue);
 int queue_peek(CircularQueue *queue);
 int queue_is_empty(CircularQueue *queue);
 int queue_clear(CircularQueue *queue);
+
+/* Generic Circular queue implementation */
+queue_t *qinit(int size, size_t item_size);
+void qprint(queue_t *queue);
+int qadd(queue_t *queue, void *item);
+void *qremove(queue_t *queue);
 
 /* Create single linked list */
 SingleLinkedList *slist_create();
