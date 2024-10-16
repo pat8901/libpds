@@ -5,7 +5,7 @@ CFLAGS = -Wextra -Wall -g -I"/usr/include" -I"./include"
 
 LDLIBS = -L"/usr/lib/x86_64-linux-gnu/" -lm
 
-SRCS = src/libpds.c
+SRCS = src/libpds.c src/queue.c src/tree.c src/linked_list.c src/hash_map.c
 
 OBJS = $(SRCS:.c=.o)
 
