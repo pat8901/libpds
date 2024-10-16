@@ -36,27 +36,6 @@ int main()
         printf("Node3 value: %d\n", result3->id);
     }
 
-    // int a = 101;
-    // int b = 32;
-
-    // int *ptr = &a;
-    // int *bptr = &b;
-
-    // qadd(queue, bptr);
-    // qadd(queue, ptr);
-
-    // int *value1 = ((char *)qremove(queue));
-    // printf("value: %d\n", *value1);
-
-    // int *value2 = ((char *)qremove(queue));
-    // printf("value: %d\n", *value2);
-
-    // int value3 = ((char *)qremove(queue));
-    // if (value3 != NULL)
-    // {
-    //     printf("value: %d\n", value3);
-    // }
-
     return 0;
 }
 
@@ -597,7 +576,6 @@ void tree_dfs_postorder(BinaryTreeNode **rootptr)
 }
 
 // TODO: change binary tree so dequeue will return tree nodes
-// TODO: Make a queue that can hold tree nodes
 void tree_bfs_print(BinaryTreeNode *root)
 {
     CircularQueue *queue = malloc(sizeof(CircularQueue));
